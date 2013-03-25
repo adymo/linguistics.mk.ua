@@ -1,0 +1,280 @@
+---
+layout: default
+title: Задание 2. Извлечение информации из текста
+---
+= Извлечение информации из текста / Information Extraction (IR) =
+
+== Ссылки на online-демонстрации IR систем ==
+* Извлечение терминов из текста
+** http://labs.translated.net/terminology-extraction/
+** http://lcl2.uniroma1.it/termextractor/demo.jsp
+* Извлечение терминов и событий (биомедицинский текст)
+** http://isoft.postech.ac.kr/Research/Bio/bio.html
+* Извлечение дат, цифр, терминов, количества
+** http://garraf.epsevg.upc.es/freeling/demo.php
+* Извлечение терминов и их переводов
+** http://www.maatoplossing.nl/tx/tx.php
+* Извлечение языков и сущностей из многоязычного текста
+** http://www.basistech.com/demo/
+
+== Результаты работы систем IR ==
+* Семантическая разметка программы Calais новостного агенства Reuters:
+** [http://www.opencalais.com/page/documentation#exampleinput Пример входной информации - новостная статья в формате HTML]
+** [http://www.opencalais.com/page/documentation#rdfexample Эта же новостная статья с семантической разметкой]
+* Извлечение событий
+** http://www-tsujii.is.s.u-tokyo.ac.jp/aNT/event.html
+
+== Ссылки на IR программы ==
+* [http://www.nist.gov/speech/tools/ Программы NIST - Национального института стандартов (USA)]
+
+== Дополнительные ссылки ==
+* Индекс читабельности
+** http://www.standards-schmandards.com/exhibits/rix/
+** http://juicystudio.com/services/readability.php
+** http://www.online-utility.org/english/readability_test_and_improve.jsp
+** http://www.harrymclaughlin.com/SMOG.htm
+* Soundex
+** http://www.searchforancestors.com/soundex.html
+** http://kankowski.narod.ru/dev/metaphoneru.htm
+
+== Задания на семинар ==
+* Извлечение эмоций / Emotion Extraction
+* Извлечение предложений быстрого доступа / Easy Access Sentence
+** http://www.cs.huji.ac.il/~beata/published_simplif_paper.pdf
+* Anaphora Resolution
+** http://nlp.stanford.edu/courses/cs224n/2003/fp/iqsayed/project_report.pdf
+
+== Задание для выполнения ==
+Провести извлечение именованных сущностей из текста используя HMM (Hidden Markov Model).
+
+=== Исходные данные ===
+Для выполнения задания необходимо выбрать небольшой текст (ок. 10 предложений), включающий в себя несколько видов сущностей, например, имена и даты. Хорошими текстами будут биографии людей, например, выдержка из биографии [http://www.bootstrap.org/chronicle/chronicle.html Дугласа Енгельбарта]:
+
+<small><span style="color:gray">Douglas Carl Engelbart has a life-long track record in predicting, designing, and implementing the future of organizational computing. The grandson of early pioneers of the West, he grew up during the Great Depression on a small farmstead near Portland, Oregon. After graduating from high school in 1942, he went on to study electrical engineering at Oregon State University. World War II interrupted his studies for the Navy, where he served for two years in the Philipines as an electronic/radar technician. After completing his B.S. in electrical engineering in 1948, he settled contentedly on the San Francisco peninsula as an electrical engineer at NACA Ames Laboratory (forerunner of NASA).</span></small>
+
+=== Порядок выполнения задания ===
+# Выделить классы именованных сущностей в тексте
+# Построить HMM для определения выделенных классов сущностей на основе выбранного текста
+# Применить полученную HMM для определения сущностей в новом предложении
+
+=== Выделение классов именованных сущностей в тексте ===
+В нашем примере можно выделить следующие сущности:
+* '''Person'''<br/><small>Douglas, Carl, Engelbart,</small>
+* '''City'''<br/><small>Portland, San, Francisco</small>
+* '''Location'''<br/><small>West, Oregon, Phillipines</small>
+* '''Organization'''<br/><small>Oregon, State, University, NACA, Ames, Laboratory, NASA, Navy</small>
+* '''Event'''<br/><small>Great, Depression, Word, War, II</small>
+* '''Date''' <br/><small>1942, 1948</small>
+Выбор и наименование сущностей необходимо производить на собственное усмотрение. Так, для простоты я объединил в примере названия штатов в США, названия государств и географическое расположение в одну сущность ''Location''. При этом квалификации, научные степени и профессии (B.S., electronic/radar technitian) опущены вообще.
+
+<small><span style="color:gray"><span style="color:black">Douglas Carl Engelbart</span> has a life-long track record in predicting, designing, and implementing the future of organizational computing. The grandson of early pioneers of the <span style="color:black">West</span>, he grew up during the <span style="color:black">Great Depression</span> on a small farmstead near <span style="color:black">Portland</span>, <span style="color:black">Oregon</span>. After graduating from high school in <span style="color:black">1942</span>, he went on to study electrical engineering at <span style="color:black">Oregon State University</span>. <span style="color:black">World War II</span> interrupted his studies for the <span style="color:black">Navy</span>, where he served for two years in the <span style="color:black">Philipines</span> as an electronic/radar technician. After completing his B.S. in electrical engineering in <span style="color:black">1948</span>,
+he settled contentedly on the <span style="color:black">San Francisco</span> peninsula as an electrical engineer at <span style="color:black">NACA Ames Laboratory</span> (forerunner of <span style="color:black">NASA</span>).</span></small>
+
+<b>Для простоты расчета возьмем только две сущности - ''Person'' и ''City''. Студентам также рекомендуется брать минимальное количество сущностей.</b>
+
+Также для простоты будем считать San Francisco одним словом.
+
+=== Построение HMM для определения выделенных классов сущностей ===
+Hidden Markov Model состоит из набора формул для вычисления вероятности того, что какое-либо слово ''w<sub>i</sub>'' является какой-нибудь именованной сущностью ''E<sub>j</sub>'' либо "не именованной сущностью" - NaN (Not a Name).
+
+Как и в любом статистическом методе, вероятности вычисляются на основе статистических данных. В нашем случае это выбранные для анализа предложения.
+
+==== Формулы для расчета вероятностей ====
+Для расчета вероятностей:
+* в начало каждого предложения добавляется специальная сущность ''Start''
+* берется рядом стоящая пара слов ''A'' и ''B'' в предложении и для нее расчитывается 3 вероятности:
+
+# Вероятность того, что любое слово является сущностью ''F'' если оно находится в предложении после слова ''A'', которое в свою очередь является сущностью <b>''E'':<br/>''p<sub>1</sub>''(''F | E''[''A'']) = Count(''E''[''A''], ''F'') / Count(''E''[''A''])''</b><br/><small>''p<sub>1</sub>'' - это отношение между количеством случаев, когда после слова ''A'' с сущностью ''E'' следует любое слово с сущностью ''F'' и количеством слов ''А'' c сущностью ''E'' в тексте</small>
+# Вероятность того, что слово ''B'' является сущностью ''F'' если оно находится в предложении после любого слова, которое является сущностью <b>''E'':<br/>''p<sub>2</sub>''([''B''] | ''E,F'') = Count(''E'', ''F''[''B'']) / Count(''E'', ''F'')</b><br/><small>''p<sub>2</sub>'' - это отношение между количеством случаев, когда после любого слова с сущностью E следует слово ''B'' с сушностью ''F'' и количеством пар слов c сущностями ''E'' и ''F'' в тексте</small>
+# Вероятность того, что слово ''B'' является той же сущностью ''E'', что и предыдущее слово ''A'':<br/><b>''p<sub>3</sub>''(''E''[''B''] | ''E''[''A'']) = Count(''E''[''A''], ''E''[''B'']) / Count(''E''[''A''])</b><br/><small>''p<sub>3</sub>'' - это отношение между количеством случаев, когда слова ''A'' и ''B'' встречаются последовательно и оба означают одну и ту же сущность ''E'' и количеством слов ''А'' c сущностью ''E'' в тексте</small>
+
+==== Пример расчета вероятностей ====
+<pre>
+p1(Person | Start[]) = 1/5 = 0.2
+1 - количество сущностей Person в начале предложения
+5 - количество "начал предложений", т.е. количество предложений
+
+p2([Douglas] | Start,Person) = 1/1 = 1.0
+1 - количество слов "Douglas", стоящих в начале предложения и являющихся Person
+1 - количество пар (Start - "начало предложения", Person) в предложениях
+
+p3(Start[Douglas] | Start[]) = 0/5 = 0
+0 - количество слов "Douglas", являющихся началом предложения (Start) и стоящих после начала предложения
+5 - количество "начал предложений", т.е. количество предложений
+
+--------------------------------------------------------------------------------
+
+p1(Person | Person[Douglas]) = 1/1 = 1.0
+1 - количество сущностей Person после слова Douglas, являющегося Person
+1 - количество слов Douglas, являющихся Person
+
+p2([Carl] | Person, Person) = 1/2 = 0.5
+1 - количество слов "Carl", стоящих после сущности Person и являющихся Person
+2 - количество пар (Person, Person) в предложениях
+
+p3(Person[Carl] | Person[Douglas]) = 1/1 = 1.0
+1 - количество слов "Carl", являющихся Person и стоящих после слова "Douglas",
+    также являющихся Person
+1 - количество слов "Douglas", являющихся Person
+
+--------------------------------------------------------------------------------
+
+p1(Person | Person[Carl]) = 1/1 = 1.0
+1 - количество сущностей Person после слова Carl, являющегося Person
+1 - количество слов Carl, являющихся Person
+
+p2([Engelbart] | Person, Person) = 1/2 = 0.5
+1 - количество слов "Engelbart", стоящих после сущности Person и являющихся Person
+2 - количество пар (Person, Person) в предложениях
+
+p3(Person[Engelbart] | Person[Carl]) = 1/1 = 1.0
+1 - количество слов "Engelbart", являющихся Person и стоящих после слова "Carl",
+    также являющихся Person
+1 - количество слов "Carl", являющихся Person
+
+--------------------------------------------------------------------------------
+
+p1(City | NaN[near]) = 1/1 = 1.0
+1 - количество сущностей City после слова "near", являющегося NaN
+1 - количество слов "near", являющихся NaN
+
+p2([Portland] | NaN, City) = 1/2 = 0.5
+1 - количество слов "Portland", стоящих после сущности NaN и являющихся City
+2 - количество пар (NaN, City) в предложениях
+
+p3(NaN[Portland] | Nan[near]) = 0/1 = 0.0
+0 - количество слов "Portland", являющихся NaN и стоящих после слова "near",
+    также являющихся NaN
+1 - количество слов "near", являющихся NaN
+
+--------------------------------------------------------------------------------
+
+p1(City | NaN[the]) = 1/1 = 1.0
+1 - количество сущностей City после слова "the", являющегося NaN
+7 - количество слов "the", являющихся NaN
+
+p2([SanFrancisco] | NaN, City) = 1/2 = 0.5
+1 - количество слов "SanFrancisco", стоящих после сущности NaN и являющихся City
+2 - количество пар (NaN, City) в предложениях
+
+p3(NaN[SanFrancisco] | Nan[the]) = 0/7 = 0.0
+0 - количество слов "SanFrancisco", являющихся NaN и стоящих после слова "the",
+    также являющихся NaN
+7 - количество слов "the", являющихся NaN
+
+--------------------------------------------------------------------------------
+
+Для всех остальных слов, не являющихся сущностями (т.е. NaN) можно выдвинуть гипотезу,
+что вероятности p1, p2, p3 будут близки к 1.0.
+
+Например,
+p1(Nan | ЛюбойКласс[любое слово]) = 
+    = (количество слов с классом NaN) / (общее количество слов) =
+    = 102/107 = 0.95
+
+Т.о. предполагаем, что вероятность того, что слово не является сущностью (т.е. является NaN)
+равна 1.0 и в расчетах не учитываем.
+
+</pre>
+
+=== Алгоритм извлечения именованных сущностей ===
+Для каждого предложения из текста:
+# Поставить сущность ''Start'' в начало предложения
+# Начать с первого слова в предложении
+# Расчитать произведение вероятностей ''p<sub>1</sub>'' * ''p<sub>2</sub>'' для текущего слова для каждого из возможных классов сущностей
+# Расчитать вероятность ''p<sub>3</sub>'' того, что текущее слово принадлежит тому же классу, что и предыдущее.
+# Назначить класс с наибольшей вероятностью для текущего слова и перейти к следующему
+
+=== Пример извлечения именованных сущностей ===
+
+<pre>
+Пример предложения для извлечения именованных сущностей:
+Douglas Engelbart was born near Portland.
+
+Добавляем Start в начало предложения:
+Start Douglas Engelbart was born near Portland.
+
+Начинаем с первого слова:
+
+Douglas:
+    p1(Person | Start[]) = 0.2
+    p2([Douglas] | Start, Person) = 1.0
+    p(Person) = p1*p2 = 0.2
+
+    p1(City | Start[]) = 0
+    p2([Douglas] | Start, City) = 0
+    p(City) = p1*p2 = 0
+
+    p3(Start[Douglas], Start[]) = 0
+
+    Итак, "Douglas" - Person с вероятностью 20%
+
+
+Engelbart:
+    p1(Person | Person[Douglas]) = 1.0
+    p2([Engelbart] | Person, Person) = 0.5
+    p(Person) = p1*p2 = 0.5
+
+    p1(City | Person[Douglas]) = 0
+    p2([Engelbart] | Person, City) = 0
+    p(City) = p1*p2 = 0
+
+    p3(Person[Engelbart] | Person[Douglas]) = 0
+
+    Итак, "Engelbart" - Person с вероятностью 50%
+
+
+was:
+    p1(Person | Person[Engelbart]) = 0
+    p2([was] | Person, Person) = 0
+    p(Person) = 0
+
+    p1(City | Person[Engelbart]) = 0
+    p2([was] | Person, City) = 0
+    p(City) = 0
+
+    p3(Person[was] | Person[was]) = 0
+
+    Итак, "was" - не сущность, т.е. NaN
+
+born:
+    p1(Person | NaN[was]) = 0
+    p2([born] | Nan, Person) = 0
+    p(Person) = 0
+
+    p1(City | NaN[was]) = 0
+    p2([was] | NaN, City) = 0
+    p(City) = 0
+
+    p3(NaN[born] | NaN[was]) = 1.0 (согласно гипотезе)
+
+    Итак, "born" - не сущность, т.е. NaN
+
+near:
+    p1(Person | NaN[born]) = 0
+    p2([near] | Nan, Person) = 0
+    p(Person) = 0
+
+    p1(City | NaN[born]) = 0
+    p2([near] | NaN, City) = 0
+    p(City) = 0
+
+    p3(NaN[near] | NaN[born]) = 1.0 (согласно гипотезе)
+
+    Итак, "near" - не сущность, т.е. NaN
+
+Portland:
+    p1(Person | NaN[near]) = 0
+    p2([Portland] | Nan, Person) = 0
+    p(Person) = 0
+
+    p1(City | NaN[near]) = 1.0
+    p2([Portland] | NaN, City) = 0.5
+    p(City) = 0.5
+
+    p3(NaN[Portland] | NaN[near]) = 0
+
+    Итак, "Portland" - City с вероятностью 0.5
+</pre>
+Решение задачи извлечения именованных сущностей:<br/>
+<b>Douglas[Person, 20%] Engelbart[Person, 50%] was born near Portland[City, 50%].</b>

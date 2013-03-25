@@ -1,0 +1,23 @@
+---
+layout: default
+title: Задание 4. Реферирование текста
+---
+= Реферирование текста / Text Summarization =
+== Ссылки на системы автоматического реферирования ==
+* http://tangra.si.umich.edu/clair/lexrank/
+* http://tangra.si.umich.edu/clair/md/demo.cgi
+* http://www.extractorlive.com/on_line_demo.html
+* http://www.pertinence.net/ps/main.jsp?ui.lang=
+* http://www.iresearch-reporter.com/
+* http://www.newsfeedresearcher.com/
+* http://swesum.nada.kth.se/index-eng.html
+
+== Программы с функциями реферирования ==
+* MS Word
+* Abiword
+* [http://www.copernic.com/en/products/summarizer/download.html Copernic]
+
+== Другие ссылки ==
+* Разрешение анафоры
+** http://www.clg.wlv.ac.uk/demos/MARS/index.php<br/><small>Пример неоднозначного текста: Peter did a great job in identifying the deep sense of the text. It looked like it was about linguistics.</small>
+ 

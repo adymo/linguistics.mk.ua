@@ -1,0 +1,28 @@
+---
+layout: default
+title: Экспертные системы
+---
+= Практическое занятие №1. Знакомство с ЭС =
+
+Ссылки на online демонстрации ЭС:
+* http://www.expertise2go.com/
+** [http://www.expertise2go.com/webesie/wine/ Выбор вина]
+** [http://www.expertise2go.com/shop/desktop.htm Выбор компьютера]
+** [http://www.expertise2go.com/shop/pda.htm Выбор карманного компьютера]
+** [http://www.expertise2go.com/webesie/StatTech/ Выбор способа анализа данных]
+** [http://www.expertise2go.com/webesie/promote/ Выбор стратегии продвижения продукта на рынок]
+** [http://www.expertise2go.com/webesie/loan/ Принятие решение про выдачу кредита]
+** [http://www.expertise2go.com/webesie/admitDotNet/ Принятие решения про принятие студента в магистратуру]
+** [http://www.expertise2go.com/webesie/car/ Диагностика неисправностей автомобиля]
+* http://www.aiinc.ca/demos/
+** [http://ext1.aiinc.ca/cgi-bin/acqweb.cgi Помощник идентификатора китов]
+** [http://www.myacquire.com/aiinc/spa/ Решение проблем с ванной]
+** [http://www.myacquire.com/aiinc/jobcoach/ Как найти и сохранить работу]
+** [http://www.aiinc.ca/demos/ Помощник по выбору пестицидов]
+* http://www.exsys.com/demomain.html
+** [http://www.exsyssoftware.com/CORVID/corvidsr?KBNAME=../Camcorder/camcorder.cvR Выбор видеокамеры]
+** [http://www.exsyssoftware.com/CORVID/corvidsr?KBNAME=../Holes/holes_in_paper.cvR Диагностика производства бумаги]
+** [http://www.exsyssoftware.com/CORVID/corvidsr?KBNAME=../Restaurant_bitmap/restaurant.cvR Помощник в выборе ресторана (в г. Альбукерк)]
+* [http://www.med-expert.net/ Эксперт в медицине]
+* [http://easydiagnosis.com/ Медицинская диагностика]
+ 
