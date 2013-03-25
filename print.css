@@ -1,0 +1,18 @@
+/*
+    Copyright 2012 Alexander Dymo <alex@alexdymo.com>
+*/
+.header-navigation, .footer, .resume-download-link, .sidebar, .post-navigation {
+    display: none;
+}
+body {
+    color: #000;
+}
+a.clickable-header {
+    color: #000;
+}
+h1, h2, h3 {
+    page-break-before: auto;
+}
+p {
+    page-break-inside: avoid;
+}

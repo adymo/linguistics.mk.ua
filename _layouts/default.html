@@ -1,0 +1,97 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <link href='http://fonts.googleapis.com/css?family=Open+Sans:400,400italic&amp;subset=latin,cyrillic' rel='stylesheet' type='text/css'>
+    <link href='http://fonts.googleapis.com/css?family=Inconsolata' rel='stylesheet' type='text/css'>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+    <meta name="author" content="Alexander Dymo">
+    <link href="/site.css" media="all" rel="stylesheet" type="text/css" />
+    <link href="/syntax.css" media="all" rel="stylesheet" type="text/css" />
+    <link href="/print.css" media="print" rel="stylesheet" type="text/css" />
+
+    <!-- standard favicon -->
+    <link href="/favicon.ico" rel="shortcut icon" type="image/x-icon" />
+    <!-- for iPhone Retina display: -->
+    <link href="/apple-touch-icon-114x114.png" rel="apple-touch-icon" sizes="114x114" />
+    <!-- for iPhone: -->
+    <link href="/apple-touch-icon-57x57.png" rel="apple-touch-icon" />
+    <!-- for iPad: -->
+    <link href="/apple-touch-icon-72x72.png" rel="apple-touch-icon" sizes="72x72" />
+    <!-- for iPad Retina: -->
+    <link href="/apple-touch-icon-144x144.png" rel="apple-touch-icon" sizes="144x144" />
+
+    {% if page.description %}
+    <meta name="description" content="{{ page.description }}" />
+    {% endif %}
+
+    <title>
+        {% if page.title %}
+             {{ page.title }} -
+        {% endif %}
+        Компьютерная лингвистика
+    </title>
+    {% if page.style %}
+        <style type="text/css">
+            {{ page.style }}
+        </style>
+    {% endif %}
+    <!-- : } </style> FIXME: hack to fix kate html highlighting -->
+    <script type="text/javascript">
+        var _gaq = _gaq || [];
+        _gaq.push(['_setAccount', 'UA-3289211-1']);
+        _gaq.push(['_setDomainName', 'linguistics.mk.ua']);
+        _gaq.push(['_trackPageview']);
+
+        (function() {
+            var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+            ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+            var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+        })();
+    </script>
+</head>
+<body>
+    <div class="wrap">
+        <div class="header">
+            <div class="header-text">
+                <a class="clickable-header" href="/">Компьютерная лингвистика</a>
+            </div>
+        </div>
+        <div class="content">
+            {% if page.title %}
+                <div class="small-caps deemphasized post-navigation" style="margin: 24px 0 0 0">
+                    <a href="/">Содержание</a>&laquo; {{ page.title | nbsp }}
+                </div>
+                <h1>{{ page.title | nbsp }}</h1>
+            {% endif %}
+            {{ content }}
+        </div>
+        <div class="sidebar">
+            <div style="margin: 24px 0 0 0; padding: 6px 0 6px 0;">
+                <a href="/alexander-dymo-computational-linguistics-book-ua.pdf">
+                    <img src="/computational-linguistics-book.png" width="180px" style="box-shadow: 2px 2px 5px rgba(0,0,0,0.5);"/>
+                </a>
+            </div>
+            <p class="opening small">
+                Пособие по компьютерной лингвистике<br/>
+                <a href="/alexander-dymo-computational-linguistics-book-ua.pdf">Cкачать PDF</a>
+            </p>
+            <p class="small">
+                Контакты:<br/>
+                <script type="text/javascript">
+                    document.write('<'+'a href="mailto:alex'+'@'+'alexdymo.com">alex'+'@'+'alexdymo.com</a>');
+                </script><br/>
+                <a href="http://www.alexdymo.com" target="_blank">
+                    www.alexdymo.com
+                </a>
+            </p>
+        </div>
+        <div class="clear"></div>
+
+        <div class="footer small deemphasized">
+             &copy; 2008-2013 <a class="header-link" target="_blank" href="https://plus.google.com/117794624398803940592?rel=author">Alexander Dymo</a>
+             <br/>
+             Текст доступен по лицензии <a target="_blank" href="http://creativecommons.org/licenses/by-nc-sa/3.0/">Creative Commons Attribution-NonCommercial-ShareAlike 3.0 Unported</a>.
+        </div>
+    </div>
+</body>
+</html>

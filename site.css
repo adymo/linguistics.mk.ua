@@ -1,0 +1,217 @@
+/*
+    Copyright 2012 Alexander Dymo <alex@alexdymo.com>
+
+    Typography:
+    Le Corbusier based scale:
+        points: 4       6.5         10.5            17              27.5
+                    5           8           13              21              34
+        pixels:                     12              19              31
+                                9           15              24              39
+    Base font size: 15px
+    Calculated manually to avoid rounding errors
+    TODO: move all comments and calculations to sass
+*/
+
+body {
+    margin:0;
+    padding: 0;
+
+    font-family: Open Sans, Verdana, sans-serif;
+    font-size: 15px;
+
+    line-height: 24px;  /* = 15px * 1.618 */
+
+    color: #222;        /* best page weight with open sans, should be #333 for verdana */
+
+    /* uncomment for vertical rhythm testing */
+/*     background: url("lines.png") repeat scroll left top rgb(255, 255, 255); */
+}
+
+p {
+    padding: 0;
+    margin: 24px 0;
+}
+/* for paragraph that is not separated by blank line */
+p.continuing {
+    margin-top: 0;
+    text-indent: 48px;  /* = line height (15px * 1.618) * 2 */
+}
+ol, ul {
+    /* typographical lists */
+    margin: 24px 0;
+    padding-left: 0;
+    list-style-position: outside;
+}
+li ul, li ol {
+    /* = line height * 2, usable until I decide on grid */
+    margin: 0 0 0 48px;
+}
+
+/* opening paragraph or other element without margin before it */
+.opening {
+    margin-top: 0;
+}
+.small {
+    font-size: 12px;
+}
+.small-caps {
+    text-transform: lowercase;
+    font-variant: small-caps;
+    letter-spacing: 1px;
+}
+.deemphasized, .deemphasized a {
+    color: #666;
+}
+
+h1, h2, h3 {
+    margin: 24px 0;
+}
+h3 {
+    font-size: 15px;
+    font-weight: bold;
+}
+h2 {
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    font-weight: bold;
+    font-size: 15px;
+}
+h1 {
+    font-weight: bold;
+    font-size: 19px;
+}
+
+hr {
+    border: 0;
+    height: 1px;
+    margin-top: -1px;
+
+    color: #000;
+    background-color: #000;
+}
+
+blockquote {
+    margin: 24px 0;
+    font-style: italic;
+}
+blockquote:before {
+    display: block;
+    height: 0;
+    margin-left: -0.8em;
+    content: '“';
+}
+blockquote:after {
+    margin-left: 0.2em;
+    content: '”';
+}
+
+img {
+    /* IE shows border by default. Override that. */
+    border: none;
+}
+
+pre {
+    margin: 24px 0;
+}
+pre code {
+    font-family: Inconsolata, Courier New, monospace;
+}
+
+table {
+    border-spacing: 0;
+    border-collapse: collapse;
+}
+table td, table th {
+    padding: 0;
+}
+
+table.post-table {
+    margin-top: -1px;   /* to compensate top border */
+    border-top: 1px solid black;
+    border-bottom: 1px solid black;
+}
+table.post-table th {
+    height: 45px; /* =2*24 - 2 (compensate th border) - 1 (hack: comensate table bottom border) */
+    border-bottom: 2px solid black;
+
+    text-align: left;
+    vertical-align: top;
+}
+table td.number, table th.number {
+    text-align: right;
+}
+
+.clear {
+    clear: both;
+}
+
+/* page proportions: 2/3 content (t) + 1/3 sidebar (e) = 1 page width (w)
+   w = 3/2t = 3/2 * 480px = 720px
+   e = 1/3w = 1/3 * 720px = 240px
+   margin between sidebar text and content text = w/12 = 60px
+*/
+.wrap {
+    margin: 0 auto;
+    padding: 0;
+    width: 720px;
+}
+.header {
+    /* border should be on a line, vertically centered */
+    border-bottom: 6px solid black;
+}
+.header-navigation {
+    float: right;
+    width: 180px;
+    margin-top: 24px;
+}
+.header-text {
+    /* padding adjusted to fit 6px border into header */
+    padding: 21px 0 21px 0;
+    font-size: 39px;
+}
+.header-link {
+    text-decoration: none;
+    color: #222; /* body color */
+}
+.current-header-link, .header-link:hover {
+    border-bottom: 1px solid black;
+}
+.content {
+    margin: 0;
+    padding: 0;
+    float: left;
+    width: 480px;   /* line will contain approx. 66 chars */
+}
+.sidebar {
+    float:left;
+    width: 180px;
+}
+.sidebar {
+    float:left;
+    width: 180px;
+    margin-left: 60px;
+}
+.footer {
+    margin: 24px 0 24px 0;
+}
+
+a.clickable-header {
+    text-decoration: none;
+    color: #222; /* body color */
+}
+
+.prev-next-post-column {
+    width: 72px;
+    padding-right: 12px;
+    text-align: right;
+    vertical-align: top;
+}
+
+.figure {
+    margin: 24px 0;
+
+    background-color: #f7f7f7;
+}
+.figcaption {
+    font-style: italic;
+}

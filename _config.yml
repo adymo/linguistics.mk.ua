@@ -1,0 +1,7 @@
+markdown: rdiscount
+permalink: /blog/:year/:month/:title.html
+pygments: true
+exclude: [linguistics.mk.ua.kdev4, Capfile, Makefile]
+
+# For local webserver
+auto: true
