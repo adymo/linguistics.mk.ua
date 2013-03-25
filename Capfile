@@ -1,10 +1,10 @@
 load 'deploy'
 
-role :web, "linguistics.mk.ua"
+role :web, "alexdymo.com"
 
 set :keep_releases, 3
 
-set :application, "linguistics.mk.ua"
+set :application, "alexdymo.com"
 set :deploy_to, "/srv/www/linguistics.mk.ua"
 set :deploy_via, :copy_with_remote_cache
 
