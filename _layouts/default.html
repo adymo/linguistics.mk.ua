@@ -58,10 +58,9 @@
         </div>
         <div class="content">
             {% if page.title %}
-                <div class="small-caps deemphasized post-navigation" style="margin: 24px 0 0 0">
-                    <a href="/">Содержание</a>&laquo; {{ page.title | nbsp }}
+                <div class="small-caps post-navigation" style="margin: 24px 0 0 0">
+                    <a href="/">Содержание</a> &raquo; {{ page.title | nbsp }}
                 </div>
-                <h1>{{ page.title | nbsp }}</h1>
             {% endif %}
             {{ content }}
         </div>
